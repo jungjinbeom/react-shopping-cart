@@ -1,12 +1,13 @@
 import Button from "../../../components/button/Button";
 import FlexCenter from "../../../components/flex-center/FlexCenter";
 import HighlightText from "../../../components/highlight-text/HighlightText";
+import Section from "../../../components/section/Section";
 import ProductName from "./ProductName";
 import RightSectionBottom from "./RightSectionBottom";
 
-const RightSection = () => {
+const RightSection = ({ price }: { price: number }) => {
   return (
-    <section className="cart-right-section">
+    <Section type="cart-right">
       <div className="cart-right-section__top">
         <ProductName>결제예상금액</ProductName>
       </div>
@@ -14,7 +15,7 @@ const RightSection = () => {
       <RightSectionBottom>
         <div className="flex justify-between p-20 mt-20">
           <HighlightText>결제예상금액</HighlightText>
-          <HighlightText>21,800원</HighlightText>
+          <HighlightText>{`${price.toLocaleString()}원`}</HighlightText>
         </div>
         <FlexCenter className="mt-30 mx-10">
           <Button type="button" className="primary-button flex-center">
@@ -22,7 +23,7 @@ const RightSection = () => {
           </Button>
         </FlexCenter>
       </RightSectionBottom>
-    </section>
+    </Section>
   );
 };
 

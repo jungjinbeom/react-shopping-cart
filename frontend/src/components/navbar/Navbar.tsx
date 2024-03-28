@@ -1,14 +1,28 @@
+import { useNavigate } from "@tanstack/react-router";
+import { ROUTE_PATH } from "../../domain/route";
+import Button from "../button/Button";
 import FlexCenter from "../flex-center/FlexCenter";
 
 const Navbar = () => {
+  const navigate = useNavigate();
+  const goToPage = (path: string) => navigate({ to: path });
+
   return (
     <nav className="nav flex justify-around">
       <FlexCenter>
         <h1 className="nav-title">CLEAN CODE SHOP</h1>
       </FlexCenter>
       <div className="flex gap-15">
-        <button className="nav-button">장바구니</button>
-        <button className="nav-button">주문목록</button>
+        <Button
+          type="button"
+          className="nav-button"
+          onClick={() => goToPage(ROUTE_PATH.CART)}
+        >
+          장바구니
+        </Button>
+        <Button type="button" className="nav-button">
+          주문목록
+        </Button>
       </div>
     </nav>
   );

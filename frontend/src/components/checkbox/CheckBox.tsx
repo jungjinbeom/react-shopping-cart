@@ -4,13 +4,14 @@ type BaseCheckBoxType = InputHTMLAttributes<HTMLInputElement>;
 
 type CheckBoxProps = BaseCheckBoxType;
 
-const CheckBox = ({ checked }: CheckBoxProps) => {
+const CheckBox = ({ checked, onClick }: CheckBoxProps) => {
   return (
     <input
       type="checkbox"
       className="checkbox"
       name="checkbox"
       checked={checked}
+      onClick={onClick}
     />
   );
 };

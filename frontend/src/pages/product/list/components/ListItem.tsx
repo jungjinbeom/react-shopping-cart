@@ -1,15 +1,33 @@
-import React from "react";
+import { Link } from "@tanstack/react-router";
+import image from "../../../../assets/images/product.png";
+import { ROUTE_PATH } from "../../../../domain/route";
+import { ProductType } from "../../../../domain/type";
+import CartIcon from "./CartIcon";
+import ProductInfo from "./ProductInfo";
 
-const ListItem = () => {
+type ListItemProps = ProductType & {
+  onClick: ({ name, price, imageUrl, id }: ProductType) => void;
+};
+
+const ListItem = ({
+  id,
+  //imageUrl,
+  name,
+  price,
+
+  onClick,
+}: ListItemProps) => {
+  const addCartList = () => {
+    onClick({ name, price, imageUrl: image, id: id });
+  };
   return (
     <div>
-      <img src="./assets/images/product.png" alt="PET보틀-정사각(420ml)" />
+      <img src={image} alt={name} />
       <div className="flex justify-between w-280 p-5">
-        <div className="product-info">
-          <span className="product-info__name">PET보틀-정사각(420ml)</span>
-          <span className="product-info__price">43,000원</span>
-        </div>
-        <img src="assets/svgs/cart.svg" alt="장바구니" />
+        <Link to={ROUTE_PATH.PRODUCT_DETAIL} params={{ id: id }}>
+          <ProductInfo name={name} price={price} />
+        </Link>
+        <CartIcon onClick={addCartList} />
       </div>
     </div>
   );

@@ -1,28 +1,22 @@
 import Container from "../../../components/container/Container";
-import Header from "../../../components/header/Header";
 import HighlightText from "../../../components/highlight-text/HighlightText";
-import OrderListItem from "../../../components/orderListItem/OrderListItem";
+import OrderListItem from "../components/OrderListItem";
+import Layout from "../components/Layout";
+import OrderSummary from "../components/OrderSummary";
+import OrderListHeader from "../components/OrderListHeader";
 
 const OrderDetail = () => {
   return (
-    <section className="order-section">
-      <Header>
-        <h2 className="order-section__title">주문내역상세</h2>
-      </Header>
-
-      <div className="order-list">
-        <div className="order-list__header">
-          <span>주문번호: 1</span>
-          <span>{`상세보기 >`}</span>
-        </div>
+    <Layout title="주문내역상세">
+      <OrderSummary>
+        <OrderListHeader />
         <OrderListItem
           productName="PET보틀-정사각(420ml)"
           productInfo="54,800원 / 수량: 3개"
           src="./assets/images/product.png"
           alt="PET보틀-정사각(420ml)"
         />
-      </div>
-
+      </OrderSummary>
       <Container className="order-detail-container">
         <div className="w-480">
           <span className="order-detail-title">결제금액 정보</span>
@@ -33,7 +27,7 @@ const OrderDetail = () => {
           </div>
         </div>
       </Container>
-    </section>
+    </Layout>
   );
 };
 

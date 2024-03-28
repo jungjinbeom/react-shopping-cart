@@ -1,26 +1,37 @@
-import Header from "../../../components/header/Header";
-import OrderListItem from "../../../components/orderListItem/OrderListItem";
+import { useQuery } from "@tanstack/react-query";
+import OrderListItem from "../components/OrderListItem";
+import Layout from "../components/Layout";
+import OrderListHeader from "../components/OrderListHeader";
+import OrderSummary from "../components/OrderSummary";
+import getOrderList from "../../../api/order/getOrderList";
 
 const OrderList = () => {
-  return (
-    <section className="order-section">
-      <Header>
-        <h2 className="order-section__title">주문 목록</h2>
-      </Header>
+  const { data } = useQuery({
+    queryKey: ["orderList"],
+    queryFn: getOrderList,
+  });
 
-      <div className="order-list">
-        <div className="order-list__header">
-          <span>주문번호: 1</span>
-          <span>{`상세보기 >`}</span>
-        </div>
-        <OrderListItem
-          productName="PET보틀-정사각(420ml)"
-          productInfo="54,800원 / 수량: 3개"
-          src="./assets/images/product.png"
-          alt="PET보틀-정사각(420ml)"
-        />
-      </div>
-    </section>
+  return (
+    <Layout title="주문 목록">
+      <OrderSummary>
+        {data?.map((item) => (
+          <>
+            <OrderListHeader />
+            {item.orderDetails.map((orderDetail) => {
+              const price = `${orderDetail.price.toLocaleString()}원/ 수량${orderDetail.quantity}개`;
+              return (
+                <OrderListItem
+                  key={orderDetail.id}
+                  name={orderDetail.name}
+                  price={price}
+                  imageUrl={orderDetail.imageUrl}
+                />
+              );
+            })}
+          </>
+        ))}
+      </OrderSummary>
+    </Layout>
   );
 };
 
