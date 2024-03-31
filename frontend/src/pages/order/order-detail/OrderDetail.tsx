@@ -4,17 +4,21 @@ import OrderListItem from "../components/OrderListItem";
 import Layout from "../components/Layout";
 import OrderSummary from "../components/OrderSummary";
 import OrderListHeader from "../components/OrderListHeader";
+import { useNavigate } from "@tanstack/react-router";
+import { ROUTE_PATH } from "../../../domain/route";
 
 const OrderDetail = () => {
+  const navigate = useNavigate();
+  const goToPage = () => navigate({ to: ROUTE_PATH.CART });
   return (
     <Layout title="주문내역상세">
       <OrderSummary>
         <OrderListHeader />
         <OrderListItem
-          productName="PET보틀-정사각(420ml)"
-          productInfo="54,800원 / 수량: 3개"
-          src="./assets/images/product.png"
-          alt="PET보틀-정사각(420ml)"
+          name="PET보틀-정사각(420ml)"
+          price="54,800원 / 수량: 3개"
+          imageUrl="./assets/images/product.png"
+          goToPage={goToPage}
         />
       </OrderSummary>
       <Container className="order-detail-container">

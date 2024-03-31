@@ -5,7 +5,7 @@ type SectionProps = {
 } & PropsWithChildren;
 
 const Section = ({ type, children }: SectionProps) => {
-  return <section className={`${type}-sction`}>{children}</section>;
+  return <section className={`${type}-section`}>{children}</section>;
 };
 
 export default Section;

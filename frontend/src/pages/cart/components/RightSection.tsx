@@ -5,7 +5,9 @@ import Section from "../../../components/section/Section";
 import ProductName from "./ProductName";
 import RightSectionBottom from "./RightSectionBottom";
 
-const RightSection = ({ price }: { price: number }) => {
+type RightSectionProps = { price: number; totalCount: number };
+
+const RightSection = ({ price, totalCount }: RightSectionProps) => {
   return (
     <Section type="cart-right">
       <div className="cart-right-section__top">
@@ -19,7 +21,7 @@ const RightSection = ({ price }: { price: number }) => {
         </div>
         <FlexCenter className="mt-30 mx-10">
           <Button type="button" className="primary-button flex-center">
-            주문하기(3개)
+            {`주문하기(${totalCount}개)`}
           </Button>
         </FlexCenter>
       </RightSectionBottom>

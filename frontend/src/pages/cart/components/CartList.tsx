@@ -1,16 +1,18 @@
-import { ChangeEvent, MouseEvent, useState } from "react";
+import { MouseEvent, useEffect, useState } from "react";
 import CheckBox from "../../../components/checkbox/CheckBox";
 import Container from "../../../components/container/Container";
 import Input from "../../../components/input/Input";
 import { ProductType } from "../../../domain/type";
+import { OPERATOR } from "../Cart";
 import CountButton from "./CountButton";
 import TrashIcon from "./TrashIcon";
-import { OPERATOR } from "../Cart";
-
-const MIN = 0;
+import { isMinVaildate } from "../util/validate";
+import { useCounter } from "../hooks/useCounter";
+import Flex from "../../../components/flex/Flex";
 
 interface CartListProps {
   product: ProductType;
+  checked: boolean;
   handleTotalPrice: ({
     price,
     operator,
@@ -18,44 +20,36 @@ interface CartListProps {
     price: number;
     operator?: string;
   }) => void;
+  handleTotalCount: (count: number) => void;
 }
 
-const isMinVaildate = (num: number) => {
-  return MIN >= num;
-};
-
-const useCounter = () => {
-  const [count, setCount] = useState(0);
-
-  const increase = () => {
-    setCount((prev) => prev + 1);
-  };
-
-  const decrease = () => {
-    setCount((prev) => prev - 1);
-  };
-
-  return { count, increase, decrease };
-};
-const CartList = ({ product, handleTotalPrice }: CartListProps) => {
+const CartList = ({
+  product,
+  checked,
+  handleTotalPrice,
+  handleTotalCount,
+}: CartListProps) => {
   const { name = "", price = 0, imageUrl = "" } = product;
   const { count, increase, decrease } = useCounter();
 
-  const [isChecked, setIsChecked] = useState(false);
+  const [isChecked, setIsChecked] = useState(checked);
   const handleChecked = (e: MouseEvent<HTMLInputElement>) => {
     const { checked } = e.currentTarget;
     setIsChecked(checked);
 
-    const total = checked ? price * count : -(price * count);
-    handleTotalPrice({ price: total });
+    const totalPrice = checked ? price * count : -(price * count);
+    handleTotalPrice({ price: totalPrice });
+
+    const totalCount = checked ? count : -count;
+    handleTotalCount(totalCount);
   };
 
   const handleIncrease = () => {
     increase();
 
     if (!isChecked) return;
-
     handleTotalPrice({ price, operator: OPERATOR.PLUS });
+    handleTotalCount(1);
   };
 
   const handleDecrease = () => {
@@ -64,16 +58,21 @@ const CartList = ({ product, handleTotalPrice }: CartListProps) => {
 
     if (!isChecked) return;
     handleTotalPrice({ price, operator: OPERATOR.MINUS });
+    handleTotalCount(-1);
   };
+
+  useEffect(() => {
+    setIsChecked(checked);
+  }, [checked]);
 
   return (
     <>
       <Container className="cart-container">
-        <div className="flex gap-15 mt-10">
+        <Flex className="gap-15 mt-10">
           <CheckBox checked={isChecked} onClick={handleChecked} />
           <img className="w-144 h-144" src={imageUrl} alt={name} />
           <span className="cart-name">{name}</span>
-        </div>
+        </Flex>
         <div className="flex-col-center justify-end gap-15">
           <TrashIcon />
           <Container className="number-input-container">

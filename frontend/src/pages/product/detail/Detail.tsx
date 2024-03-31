@@ -1,17 +1,30 @@
+import { useNavigate } from "@tanstack/react-router";
 import product from "../../../assets/images/product.png";
 import Button from "../../../components/button/Button";
 import Container from "../../../components/container/Container";
+import { ROUTE_PATH } from "../../../domain/route";
 import { useCartMutation } from "../../../hooks/useCartMutation";
 import { useProductQuery } from "../../../hooks/useProductQuery";
 
 type DetailProps = {
   id: number;
 };
+
 const Detail = ({ id }: DetailProps) => {
   const { data } = useProductQuery({ id });
   const { mutate } = useCartMutation();
+  const navigate = useNavigate();
 
-  const addCart = () => mutate(data);
+  const addCart = () => {
+    mutate(data);
+  };
+
+  const goToPage = (path: string) => navigate({ to: path });
+
+  const handleCart = () => {
+    addCart();
+    goToPage(ROUTE_PATH.CART);
+  };
 
   return (
     <Container className="product-detail-container">
@@ -30,7 +43,7 @@ const Detail = ({ id }: DetailProps) => {
         <Button
           type="button"
           className="product-detail-button flex-center mt-20"
-          onClick={addCart}
+          onClick={handleCart}
         >
           장바구니
         </Button>

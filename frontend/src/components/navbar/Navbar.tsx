@@ -10,7 +10,9 @@ const Navbar = () => {
   return (
     <nav className="nav flex justify-around">
       <FlexCenter>
-        <h1 className="nav-title">CLEAN CODE SHOP</h1>
+        <div onClick={() => goToPage(ROUTE_PATH.PRODUCT)}>
+          <h1 className="nav-title">CLEAN CODE SHOP</h1>
+        </div>
       </FlexCenter>
       <div className="flex gap-15">
         <Button
@@ -20,7 +22,11 @@ const Navbar = () => {
         >
           장바구니
         </Button>
-        <Button type="button" className="nav-button">
+        <Button
+          type="button"
+          className="nav-button"
+          onClick={() => goToPage(ROUTE_PATH.ORDER_LIST)}
+        >
           주문목록
         </Button>
       </div>

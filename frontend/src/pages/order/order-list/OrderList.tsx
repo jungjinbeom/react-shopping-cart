@@ -1,15 +1,15 @@
-import { useQuery } from "@tanstack/react-query";
-import OrderListItem from "../components/OrderListItem";
+import { useNavigate } from "@tanstack/react-router";
+import { useOrderListQuery } from "../../../hooks/useOrderListQuery";
 import Layout from "../components/Layout";
 import OrderListHeader from "../components/OrderListHeader";
+import OrderListItem from "../components/OrderListItem";
 import OrderSummary from "../components/OrderSummary";
-import getOrderList from "../../../api/order/getOrderList";
+import { ROUTE_PATH } from "../../../domain/route";
 
 const OrderList = () => {
-  const { data } = useQuery({
-    queryKey: ["orderList"],
-    queryFn: getOrderList,
-  });
+  const navigate = useNavigate();
+  const { data } = useOrderListQuery();
+  const goToPage = () => navigate({ to: ROUTE_PATH.CART });
 
   return (
     <Layout title="주문 목록">
@@ -17,17 +17,17 @@ const OrderList = () => {
         {data?.map((item) => (
           <>
             <OrderListHeader />
-            {item.orderDetails.map((orderDetail) => {
-              const price = `${orderDetail.price.toLocaleString()}원/ 수량${orderDetail.quantity}개`;
-              return (
+            {item.orderDetails.map(
+              ({ id, price, name, imageUrl, quantity }) => (
                 <OrderListItem
-                  key={orderDetail.id}
-                  name={orderDetail.name}
-                  price={price}
-                  imageUrl={orderDetail.imageUrl}
+                  key={id}
+                  name={name}
+                  price={`${price?.toLocaleString()}원/ 수량${quantity}개`}
+                  imageUrl={imageUrl}
+                  goToPage={goToPage}
                 />
-              );
-            })}
+              )
+            )}
           </>
         ))}
       </OrderSummary>

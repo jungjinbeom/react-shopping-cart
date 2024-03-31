@@ -5,7 +5,7 @@ type UseProductQuery = { id: number };
 
 export const useProductQuery = ({ id }: UseProductQuery) => {
   return useQuery({
-    queryKey: ["products"],
+    queryKey: ["product"],
     queryFn: () => getProduct({ id }),
   });
 };

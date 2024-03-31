@@ -1,15 +1,11 @@
 import axios from "axios";
+import { ProductType } from "../../domain/type";
 
 type ResponseType = {
   id: number;
-  orderDetails: {
-    id: number;
-    price: number;
-    name: string;
-    imageUrl: string;
-    quantity: number;
-  }[];
+  orderDetails: ProductType[];
 };
+
 const getOrderList = async () => {
   const { data } = await axios.get<ResponseType[]>("/orders");
   return data;

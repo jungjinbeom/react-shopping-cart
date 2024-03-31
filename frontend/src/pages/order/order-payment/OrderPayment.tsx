@@ -8,9 +8,9 @@ const OrderPayment = () => {
     <Layout title="주문/결제">
       <div className="flex">
         <OrderLeftSection>
-          {data.map((item) => (
+          {/* {data.map((item) => (
             <OrderPaymentList {...item} />
-          ))}
+          ))} */}
         </OrderLeftSection>
         <OrderRightSection amount={10000} />
       </div>

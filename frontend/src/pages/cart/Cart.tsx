@@ -1,42 +1,30 @@
 import Header from "../../components/header/Header";
 import CartList from "./components/CartList";
 import LeftSection from "./components/LeftSection";
-
-import { useState } from "react";
 import Flex from "../../components/flex/Flex";
 import Section from "../../components/section/Section";
 import useCartListQuery from "../../hooks/useCartListQuery";
 import RightSection from "./components/RightSection";
+
+import { useCart } from "./hooks/useCart";
+import { MouseEvent, useState } from "react";
 
 export const OPERATOR = {
   PLUS: "PLUS",
   MINUS: "MINUS",
 } as const;
 
-const sum = (first: number, second: number) => {
-  return first + second;
-};
-const subtract = (first: number, second: number) => {
-  return first - second;
-};
-
-type TotalPrice = {
-  price: number;
-  operator?: string;
-};
-
 const Cart = () => {
   const { data } = useCartListQuery();
 
-  const [totalPrice, setTotalPrice] = useState(0);
-  const handleTotalPrice = ({ price, operator }: TotalPrice) => {
-    if (!operator) setTotalPrice((prev) => prev + price);
-
-    if (operator) {
-      if (operator === "PLUS") setTotalPrice((prev) => sum(prev, price));
-      if (operator === "MINUS") setTotalPrice((prev) => subtract(prev, price));
-    }
+  const [allChecked, setAllChecked] = useState(false);
+  const handleAllChecked = (e: MouseEvent<HTMLInputElement>) => {
+    const { checked } = e.currentTarget;
+    setAllChecked(checked);
   };
+
+  const { totalPrice, handleTotalPrice, totalCount, handleTotalCount } =
+    useCart();
 
   return (
     <Section type="cart">
@@ -44,16 +32,22 @@ const Cart = () => {
         <h2 className="cart-section__title">장바구니</h2>
       </Header>
       <Flex>
-        <LeftSection>
-          {data?.map((item) => (
+        <LeftSection
+          checked={allChecked}
+          productNum={data?.length}
+          handleAllChecked={handleAllChecked}
+        >
+          {data?.map(({ id, product }) => (
             <CartList
-              key={item.id}
-              product={item.product}
+              key={id}
+              product={product}
+              checked={allChecked}
               handleTotalPrice={handleTotalPrice}
+              handleTotalCount={handleTotalCount}
             />
           ))}
         </LeftSection>
-        <RightSection price={totalPrice} />
+        <RightSection totalCount={totalCount} price={totalPrice} />
       </Flex>
     </Section>
   );
