@@ -1,6 +1,7 @@
 export const ROUTE_PATH = {
+  PRODUCT: "/",
+  PRODUCT_DETAIL: "/product/$id",
   CART: "/cart",
   ORDER: "/order",
-  PRODUCT: "/product",
-  PRODUCT_DETAIL: "/product/$id",
+  ORDER_LIST: "/orderList",
 } as const;
