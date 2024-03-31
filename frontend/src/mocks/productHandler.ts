@@ -1,5 +1,4 @@
 import { HttpResponse, http } from "msw";
-import React from "react";
 import { ProductType } from "../domain/type";
 
 type Param = {
@@ -61,6 +60,7 @@ const mockData = [
 
 export const productHandler = [
   http.get("/products", () => {
+    console.log({ mockData });
     return HttpResponse.json(mockData);
   }),
 
