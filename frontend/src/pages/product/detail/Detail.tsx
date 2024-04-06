@@ -15,9 +15,7 @@ const Detail = ({ id }: DetailProps) => {
   const { mutate } = useCartMutation();
   const navigate = useNavigate();
 
-  const addCart = () => {
-    mutate(data);
-  };
+  const addCart = () => mutate(data);
 
   const goToPage = (path: string) => navigate({ to: path });
 
