@@ -1,9 +1,9 @@
 import axios from "axios";
-import { ProductType } from "../../domain/type";
+import { type ProductType as OrderDetailType } from "../../domain/type";
 
 type ResponseType = {
   id: number;
-  orderDetails: ProductType[];
+  orderDetails: OrderDetailType[];
 };
 
 const getOrderList = async () => {
