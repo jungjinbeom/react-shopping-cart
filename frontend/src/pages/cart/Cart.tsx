@@ -16,15 +16,14 @@ export const OPERATOR = {
 
 const Cart = () => {
   const { data } = useCartListQuery();
+  const { totalPrice, handleTotalPrice, totalCount, handleTotalCount } =
+    useCart();
 
   const [allChecked, setAllChecked] = useState(false);
   const handleAllChecked = (e: MouseEvent<HTMLInputElement>) => {
     const { checked } = e.currentTarget;
     setAllChecked(checked);
   };
-
-  const { totalPrice, handleTotalPrice, totalCount, handleTotalCount } =
-    useCart();
 
   return (
     <Section type="cart">
@@ -37,7 +36,7 @@ const Cart = () => {
           productNum={data?.length}
           handleAllChecked={handleAllChecked}
         >
-          {data?.map(({ id, product }) => (
+          {data.map(({ id, product }) => (
             <CartList
               key={id}
               product={product}

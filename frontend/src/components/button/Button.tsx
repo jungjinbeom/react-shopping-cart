@@ -2,11 +2,7 @@ import { ButtonHTMLAttributes, PropsWithChildren } from "react";
 
 type BaseButtonType = ButtonHTMLAttributes<HTMLButtonElement>;
 
-type ButtonProps = {
-  type: "button" | "submit" | "reset";
-  className?: string;
-  onClick?: () => void;
-} & PropsWithChildren<BaseButtonType>;
+type ButtonProps = PropsWithChildren<BaseButtonType>;
 
 const Button = ({
   type = "button",

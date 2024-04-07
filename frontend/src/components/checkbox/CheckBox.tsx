@@ -1,8 +1,9 @@
-import { InputHTMLAttributes } from "react";
+import { MouseEvent } from "react";
 
-type BaseCheckBoxType = InputHTMLAttributes<HTMLInputElement>;
-
-type CheckBoxProps = BaseCheckBoxType;
+type CheckBoxProps = {
+  checked: boolean;
+  onClick: (e: MouseEvent<HTMLInputElement>) => void;
+};
 
 const CheckBox = ({ checked, onClick }: CheckBoxProps) => {
   return (

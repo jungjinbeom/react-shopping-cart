@@ -29,7 +29,7 @@ const CartList = ({
   handleTotalPrice,
   handleTotalCount,
 }: CartListProps) => {
-  const { name = "", price = 0, imageUrl = "" } = product;
+  const { name, price = 0, imageUrl } = product;
   const { count, increase, decrease } = useCounter();
 
   const [isChecked, setIsChecked] = useState(checked);
