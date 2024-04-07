@@ -1,5 +1,5 @@
-import { MIN } from "../../../domain/constant";
+const COUNT_MIN = 0;
 
 export const isMinVaildate = (num: number) => {
-  return MIN >= num;
+  return COUNT_MIN >= num;
 };
